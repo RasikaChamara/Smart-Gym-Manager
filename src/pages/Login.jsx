@@ -1,21 +1,24 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import supabase from '../lib/supabaseClient';
-import logo from '../assets/logo.png';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import supabase from "../lib/supabaseClient";
+import logo from "../assets/logo.png";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) {
       setErrorMsg(error.message);
     } else {
-      navigate('/admin/dashboard');
+      navigate("/admin/dashboard");
     }
   };
 
@@ -70,6 +73,13 @@ const Login = () => {
             Log In
           </button>
         </form>
+        {/* Register Link */}
+        <p
+          className="mt-4 text-center text-yellow-400 hover:underline cursor-pointer"
+          onClick={() => navigate("/register")}
+        >
+          Don't have an account? Register here
+        </p>
       </div>
     </div>
   );

@@ -57,14 +57,14 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/admin/members"
+            to="/admin/approve-members"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md text-sm transition ${
                 isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
               }`
             }
           >
-            {!collapsed ? "Add Member" : "➕"}
+            {!collapsed ? "Approve Members" : "✅"}
           </NavLink>
 
           <NavLink
