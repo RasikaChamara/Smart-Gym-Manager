@@ -66,6 +66,28 @@ const AdminLayout = () => {
           >
             {!collapsed ? "Approve Members" : "✅"}
           </NavLink>
+          
+          <NavLink
+            to="/admin/view-members"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "View Members" : "👥"}
+          </NavLink>
+
+          <NavLink
+            to="/admin/add-member-no-email"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "Add Member (No Email)" : "➕"}
+          </NavLink>
 
           <NavLink
             to="/admin/payments"

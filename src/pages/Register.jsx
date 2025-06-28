@@ -201,6 +201,19 @@ export default function Register() {
             />
           </div>
 
+          {/* Phone Number */}
+          <div>
+            <label className="block mb-1 text-sm">Phone Number</label>
+            <input
+              type="text"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              required
+              className="w-full rounded-md px-3 py-2 bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none"
+            />
+          </div>
+
           {/* Birthday */}
           <div>
             <label className="block mb-1 text-sm">Birthday</label>
@@ -284,6 +297,19 @@ export default function Register() {
               name="target"
               value={form.target}
               onChange={handleChange}
+              className="w-full rounded-md px-3 py-2 bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none"
+            />
+          </div>
+
+          {/* Membership Starting Date */}
+          <div>
+            <label className="block mb-1 text-sm">Membership Starting Date</label>
+            <input
+              type="date"
+              name="membership_start"
+              value={form.membership_start}
+              onChange={handleChange}
+              required
               className="w-full rounded-md px-3 py-2 bg-gray-800 border border-gray-700 focus:border-yellow-400 focus:outline-none"
             />
           </div>
