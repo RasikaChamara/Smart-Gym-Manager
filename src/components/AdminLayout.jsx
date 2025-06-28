@@ -90,17 +90,6 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/admin/payments"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Add Payment" : "💳"}
-          </NavLink>
-
-          <NavLink
             to="/admin/attendance"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-md text-sm transition ${

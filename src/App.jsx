@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import ApproveMembers from "./pages/ApproveMembers";
 import ViewMembers from "./pages/ViewMembers";
 import AddMemberNoEmail from "./pages/AddMemberNoEmail";
+import Attendance from "./pages/Attendance";
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
             <Route path="approve-members" element={<ApproveMembers />} />
             <Route path="view-members" element={<ViewMembers />} />
             <Route path="/admin/add-member-no-email" element={<AddMemberNoEmail />} />
+            <Route path="attendance" element={<Attendance />} />
+
 
             {/* Other admin pages go here */}
           </Route>
