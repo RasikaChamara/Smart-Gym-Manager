@@ -66,7 +66,7 @@ const AdminLayout = () => {
           >
             {!collapsed ? "Approve Members" : "✅"}
           </NavLink>
-          
+
           <NavLink
             to="/admin/view-members"
             className={({ isActive }) =>
@@ -98,6 +98,29 @@ const AdminLayout = () => {
             }
           >
             {!collapsed ? "Attendance" : "📋"}
+          </NavLink>
+
+          <NavLink
+            to="/admin/payments"
+            end
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "Add Payment" : "💳"}
+          </NavLink>
+
+          <NavLink
+            to="/admin/payments/view"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "View Payment" : "📊"}
           </NavLink>
         </nav>
       </aside>

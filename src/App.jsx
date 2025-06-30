@@ -9,6 +9,8 @@ import ApproveMembers from "./pages/ApproveMembers";
 import ViewMembers from "./pages/ViewMembers";
 import AddMemberNoEmail from "./pages/AddMemberNoEmail";
 import Attendance from "./pages/Attendance";
+import AddPayment from "./pages/AddPayment";
+import ViewPayments from "./pages/ViewPayments";
 
 
 function App() {
@@ -27,6 +29,9 @@ function App() {
             <Route path="view-members" element={<ViewMembers />} />
             <Route path="/admin/add-member-no-email" element={<AddMemberNoEmail />} />
             <Route path="attendance" element={<Attendance />} />
+            <Route path="payments" element={<AddPayment />} />
+            <Route path="payments/view" element={<ViewPayments />} />
+
 
 
             {/* Other admin pages go here */}
