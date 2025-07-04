@@ -11,6 +11,7 @@ import AddMemberNoEmail from "./pages/AddMemberNoEmail";
 import Attendance from "./pages/Attendance";
 import AddPayment from "./pages/AddPayment";
 import ViewPayments from "./pages/ViewPayments";
+import AddMeasurement from "./pages/AddMeasurement";
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
             <Route path="attendance" element={<Attendance />} />
             <Route path="payments" element={<AddPayment />} />
             <Route path="payments/view" element={<ViewPayments />} />
-
+            <Route path="measurements/add" element={<AddMeasurement />} />
 
 
             {/* Other admin pages go here */}

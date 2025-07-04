@@ -4,6 +4,43 @@ import toast from "react-hot-toast";
 import Select from "react-select";
 import { startOfMonth, endOfMonth, format } from "date-fns";
 
+const exportToCSV = (payments) => {
+  if (!payments.length) return;
+
+  const headers = [
+    "Member ID",
+    "Name",
+    "Amount",
+    "Payment Type",
+    "Paid At",
+    "Period Start",
+    "Period End",
+  ];
+
+  const rows = payments.map((p) => [
+    p.members.member_id,
+    `${p.members.first_name} ${p.members.last_name}`,
+    p.amount,
+    p.payment_type,
+    p.paid_at,
+    p.period_start,
+    p.period_end,
+  ]);
+
+  const csvContent = [headers, ...rows]
+    .map((e) => e.map((v) => `"${v}"`).join(","))
+    .join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", "payments.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 export default function ViewPayments() {
   const today = new Date();
   const [filterMonth, setFilterMonth] = useState(format(today, "yyyy-MM"));
@@ -103,6 +140,7 @@ export default function ViewPayments() {
     };
 
     fetchPayments();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterMonth, filterMember, viewAll]);
 
   const money = (n) =>
@@ -170,6 +208,18 @@ export default function ViewPayments() {
         </div>
       ) : (
         <div className="h-20 mb-8 animate-pulse bg-gray-800 rounded" />
+      )}
+
+      {/* Export CSV Button */}
+      {rows.length > 0 && (
+        <div className="mb-6 text-right">
+          <button
+            onClick={() => exportToCSV(rows)}
+            className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded"
+          >
+            ⬇ Export CSV
+          </button>
+        </div>
       )}
 
       {/* Payment list */}

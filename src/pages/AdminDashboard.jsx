@@ -5,6 +5,7 @@ import StatCard from "../components/StatCard";
 const icons = {
   members: "🏋️",
   payments: "💳",
+  balance: "💰",          // NEW icon
   checkins: "📅",
   expiries: "⏳",
 };
@@ -17,8 +18,8 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       const today = new Date();
       const yyyy = today.getFullYear();
-      const mm = today.getMonth() + 1; // 1-12
-      const isoToday = today.toISOString().slice(0, 10); // YYYY-MM-DD
+      const mm = today.getMonth() + 1; // 1‑12
+      const isoToday = today.toISOString().slice(0, 10); // YYYY‑MM‑DD
 
       /* ---------- 1. Active members & expiring soon ---------- */
       const { data: members } = await supabase
@@ -38,7 +39,7 @@ export default function AdminDashboard() {
         return d >= today && d <= sevenDays;
       }).length;
 
-      /* ---------- 2. Today’s check-ins ---------- */
+      /* ---------- 2. Today’s check‑ins ---------- */
       const { data: checkins } = await supabase
         .from("attendance")
         .select("id")
@@ -62,18 +63,31 @@ export default function AdminDashboard() {
         0
       );
 
-      /* ---------- 4. Recent activity (last 5 check-ins) ---------- */
+      /* ---------- 3b. Running balance (YTD) ---------- */
+      const startOfYear = `${yyyy}-01-01`;
+
+      const { data: yearPayments } = await supabase
+        .from("payments")
+        .select("amount")
+        .eq("status", "PAID")
+        .gte("paid_at", startOfYear);
+
+      const runningBalance = yearPayments.reduce(
+        (sum, p) => sum + Number(p.amount || 0),
+        0
+      );
+
+      /* ---------- 4. Recent activity (last 5 check‑ins) ---------- */
       const { data: recentChecks } = await supabase
         .from("attendance")
         .select(
           `
-  id,
-  date,
-  members ( first_name, last_name )
-`
+          id,
+          date,
+          members ( first_name, last_name )
+        `
         )
         .order("date", { ascending: false })
-
         .limit(5);
 
       const recentList = recentChecks.map((c) => {
@@ -92,6 +106,11 @@ export default function AdminDashboard() {
           currency: "LKR",
           maximumFractionDigits: 0,
         }),
+        runningBalance: runningBalance.toLocaleString("en-LK", {
+          style: "currency",
+          currency: "LKR",
+          maximumFractionDigits: 0,
+        }),
         checkins: checkins.length,
         expiries: expiringSoon,
       });
@@ -103,36 +122,19 @@ export default function AdminDashboard() {
 
   /* ---------- Loading state ---------- */
   if (!stats) {
-    return (
-      <div className="text-gray-400 animate-pulse">Loading dashboard…</div>
-    );
+    return <div className="text-gray-400 animate-pulse">Loading dashboard…</div>;
   }
 
   /* ---------- Render ---------- */
   return (
     <div className="space-y-8">
       {/* Stats grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          icon={icons.members}
-          label="Active Members"
-          value={stats.members}
-        />
-        <StatCard
-          icon={icons.payments}
-          label="Payments (Month)"
-          value={stats.payments}
-        />
-        <StatCard
-          icon={icons.checkins}
-          label="Today’s Check-ins"
-          value={stats.checkins}
-        />
-        <StatCard
-          icon={icons.expiries}
-          label="Expiring Soon"
-          value={stats.expiries}
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <StatCard icon={icons.members}  label="Active Members"   value={stats.members} />
+        <StatCard icon={icons.payments} label="Payments (Month)" value={stats.payments} />
+        <StatCard icon={icons.balance}  label="Running Balance (YTD)" value={stats.runningBalance} />
+        <StatCard icon={icons.checkins} label="Today’s Check‑ins" value={stats.checkins} />
+        <StatCard icon={icons.expiries} label="Expiring Soon"   value={stats.expiries} />
       </div>
 
       {/* Recent activity */}
@@ -150,7 +152,7 @@ export default function AdminDashboard() {
         </ul>
       </div>
 
-      {/* Payment chart placeholder (unchanged) */}
+      {/* Payment chart placeholder */}
       <div className="bg-gray-900 rounded-xl p-6 shadow">
         <h3 className="text-xl font-semibold mb-4">
           Monthly Income (Last 6 Months)
@@ -160,7 +162,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Quick actions (unchanged) */}
+      {/* Quick actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <button className="bg-yellow-400 text-black rounded-xl p-6 font-semibold hover:bg-yellow-500 transition">
           ➕ Add Member
