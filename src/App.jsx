@@ -13,6 +13,7 @@ import AddPayment from "./pages/AddPayment";
 import ViewPayments from "./pages/ViewPayments";
 import AddMeasurement from "./pages/AddMeasurement";
 import ViewMeasurements from "./pages/ViewMeasurements";
+import CreateSchedule from "./pages/CreateSchedule";
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
             <Route path="payments/view" element={<ViewPayments />} />
             <Route path="measurements/add" element={<AddMeasurement />} />
             <Route path="measurements/view" element={<ViewMeasurements />} />
-
+            <Route path="schedule/add" element={<CreateSchedule />} />
 
             {/* Other admin pages go here */}
           </Route>

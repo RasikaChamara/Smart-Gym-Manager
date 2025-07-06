@@ -144,6 +144,18 @@ const AdminLayout = () => {
           >
             {!collapsed ? "View Measurements" : "📊"}
           </NavLink>
+
+          
+          <NavLink
+            to="/admin/schedule/add"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "Create Schedule" : "📊"}
+          </NavLink>
         </nav>
         
       </aside>
