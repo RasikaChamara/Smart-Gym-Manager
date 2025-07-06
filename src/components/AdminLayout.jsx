@@ -133,7 +133,19 @@ const AdminLayout = () => {
           >
             {!collapsed ? "Add Measurements" : "📏"}
           </NavLink>
+
+          <NavLink
+            to="/admin/measurements/view"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-md text-sm transition ${
+                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+              }`
+            }
+          >
+            {!collapsed ? "View Measurements" : "📊"}
+          </NavLink>
         </nav>
+        
       </aside>
 
       {/* Main Content */}

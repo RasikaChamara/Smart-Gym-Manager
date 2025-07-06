@@ -5,7 +5,7 @@ import StatCard from "../components/StatCard";
 const icons = {
   members: "🏋️",
   payments: "💳",
-  balance: "💰",          // NEW icon
+  balance: "💰",         
   checkins: "📅",
   expiries: "⏳",
 };
