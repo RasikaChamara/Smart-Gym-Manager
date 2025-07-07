@@ -103,9 +103,16 @@ export default function CreateSchedule() {
       // 1. insert schedule
       const { data: scheduleRes, error: schedErr } = await supabase
         .from("schedules")
-        .insert([{ title: planTitle, days }])
+        .insert([
+          {
+            title: planTitle,
+            days,
+            member_id: selectedMember.value, 
+          },
+        ])
         .select("id")
         .single();
+
       if (schedErr) throw schedErr;
       const scheduleId = scheduleRes.id;
 

@@ -14,6 +14,7 @@ import ViewPayments from "./pages/ViewPayments";
 import AddMeasurement from "./pages/AddMeasurement";
 import ViewMeasurements from "./pages/ViewMeasurements";
 import CreateSchedule from "./pages/CreateSchedule";
+import ViewSchedules from "./pages/ViewSchedules";
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
             <Route path="measurements/add" element={<AddMeasurement />} />
             <Route path="measurements/view" element={<ViewMeasurements />} />
             <Route path="schedule/add" element={<CreateSchedule />} />
+            <Route path="schedule/view" element={<ViewSchedules />} />
+
 
             {/* Other admin pages go here */}
           </Route>
