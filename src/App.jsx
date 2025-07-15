@@ -15,7 +15,8 @@ import AddMeasurement from "./pages/AddMeasurement";
 import ViewMeasurements from "./pages/ViewMeasurements";
 import CreateSchedule from "./pages/CreateSchedule";
 import ViewSchedules from "./pages/ViewSchedules";
-
+import Notifications from "./pages/notifications";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -39,7 +40,8 @@ function App() {
             <Route path="measurements/view" element={<ViewMeasurements />} />
             <Route path="schedule/add" element={<CreateSchedule />} />
             <Route path="schedule/view" element={<ViewSchedules />} />
-
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="about" element={<About />} />
 
             {/* Other admin pages go here */}
           </Route>

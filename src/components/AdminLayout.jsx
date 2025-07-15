@@ -4,15 +4,48 @@ import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 import supabase from "../lib/supabaseClient";
 
+// Sidebar icons
+import dashboardIcon from "../assets/icons/dashboard.png";
+import approveIcon from "../assets/icons/approve.png";
+import membersIcon from "../assets/icons/members.png";
+import addIcon from "../assets/icons/add.png";
+import attendanceIcon from "../assets/icons/attendance.png";
+import paymentIcon from "../assets/icons/payment.png";
+import viewPaymentIcon from "../assets/icons/view_payment.png";
+import addMeasureIcon from "../assets/icons/add_measure.png";
+import viewMeasureIcon from "../assets/icons/view_measure.png";
+import createScheduleIcon from "../assets/icons/create_schedule.png";
+import viewScheduleIcon from "../assets/icons/view_schedule.png";
+import NotificationIcon from "../assets/icons/notifications.png";
+import About from "../assets/icons/about.png"
+
 const AdminLayout = () => {
   const { user } = useAuth();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true); // Collapsed by default
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/");
   };
+
+  const SidebarItem = ({ to, icon, label, end = false }) => (
+    <NavLink
+      to={to}
+      end={end}
+      className={({ isActive }) =>
+        `block px-4 py-2 rounded-md text-sm transition ${
+          isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
+        }`
+      }
+    >
+      {!collapsed ? (
+        label
+      ) : (
+        <img src={icon} alt={label} className="h-5 w-5 mx-auto" />
+      )}
+    </NavLink>
+  );
 
   return (
     <div className="flex min-h-screen bg-black text-white">
@@ -24,151 +57,30 @@ const AdminLayout = () => {
       >
         <div className="h-20 flex items-center justify-between px-4 border-b border-gray-800">
           <img src={logo} alt="Gym Logo" className="h-10 w-10" />
-          {!collapsed && (
-            <button
-              onClick={() => setCollapsed(!collapsed)}
-              className="text-yellow-400 hover:text-yellow-300"
-              title="Collapse"
-            >
-              ⏪
-            </button>
-          )}
-          {collapsed && (
-            <button
-              onClick={() => setCollapsed(!collapsed)}
-              className="text-yellow-400 hover:text-yellow-300"
-              title="Expand"
-            >
-              ☰
-            </button>
-          )}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="text-yellow-400 hover:text-yellow-300"
+            title={collapsed ? "Expand" : "Collapse"}
+          >
+            {collapsed ? "☰" : "⏪"}
+          </button>
         </div>
 
         <nav className="flex-1 mt-4 space-y-2 px-2">
-          <NavLink
-            to="/admin/dashboard"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Dashboard Home" : "🏠"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/approve-members"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Approve Members" : "✅"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/view-members"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "View Members" : "👥"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/add-member-no-email"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Add Member (No Email)" : "➕"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/attendance"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Attendance" : "📋"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/payments"
-            end
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Add Payment" : "💳"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/payments/view"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "View Payment" : "📊"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/measurements/add"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Add Measurements" : "📏"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/measurements/view"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "View Measurements" : "📊"}
-          </NavLink>
-
-          
-          <NavLink
-            to="/admin/schedule/add"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "Create Schedule" : "📊"}
-          </NavLink>
-
-          <NavLink
-            to="/admin/schedule/view"
-            className={({ isActive }) =>
-              `block px-4 py-2 rounded-md text-sm transition ${
-                isActive ? "bg-yellow-400 text-black" : "hover:bg-gray-700"
-              }`
-            }
-          >
-            {!collapsed ? "View Schedules" : "📅"}
-          </NavLink>
+          <SidebarItem to="/admin/dashboard" icon={dashboardIcon} label="Dashboard Home" />
+          <SidebarItem to="/admin/approve-members" icon={approveIcon} label="Approve Members" />
+          <SidebarItem to="/admin/view-members" icon={membersIcon} label="View Members" />
+          <SidebarItem to="/admin/add-member-no-email" icon={addIcon} label="Add Member (No Email)" />
+          <SidebarItem to="/admin/attendance" icon={attendanceIcon} label="Attendance" />
+          <SidebarItem to="/admin/payments" end icon={paymentIcon} label="Add Payment" />
+          <SidebarItem to="/admin/payments/view" icon={viewPaymentIcon} label="View Payment" />
+          <SidebarItem to="/admin/measurements/add" icon={addMeasureIcon} label="Add Measurements" />
+          <SidebarItem to="/admin/measurements/view" icon={viewMeasureIcon} label="View Measurements" />
+          <SidebarItem to="/admin/schedule/add" icon={createScheduleIcon} label="Create Schedule" />
+          <SidebarItem to="/admin/schedule/view" icon={viewScheduleIcon} label="View Schedules" />
+          <SidebarItem to="/admin/notifications" icon={NotificationIcon} label="Notofications" />
+          <SidebarItem to="/admin/about" icon={About} label="About App" />
         </nav>
-        
       </aside>
 
       {/* Main Content */}
