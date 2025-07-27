@@ -17,7 +17,8 @@ import viewMeasureIcon from "../assets/icons/view_measure.png";
 import createScheduleIcon from "../assets/icons/create_schedule.png";
 import viewScheduleIcon from "../assets/icons/view_schedule.png";
 import NotificationIcon from "../assets/icons/notifications.png";
-import About from "../assets/icons/about.png"
+import About from "../assets/icons/about.png";
+import mng_ex from "../assets/icons/mng_ex.png";
 
 const AdminLayout = () => {
   const { user } = useAuth();
@@ -79,6 +80,7 @@ const AdminLayout = () => {
           <SidebarItem to="/admin/schedule/add" icon={createScheduleIcon} label="Create Schedule" />
           <SidebarItem to="/admin/schedule/view" icon={viewScheduleIcon} label="View Schedules" />
           <SidebarItem to="/admin/notifications" icon={NotificationIcon} label="Notofications" />
+          <SidebarItem to="/admin/manage_ex" icon={mng_ex} label="Manage Exercises" />
           <SidebarItem to="/admin/about" icon={About} label="About App" />
         </nav>
       </aside>

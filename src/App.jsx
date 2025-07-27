@@ -16,6 +16,7 @@ import ViewMeasurements from "./pages/ViewMeasurements";
 import CreateSchedule from "./pages/CreateSchedule";
 import ViewSchedules from "./pages/ViewSchedules";
 import Notifications from "./pages/notifications";
+import ManageExercises from "./pages/ManageExercises";
 import About from "./pages/About";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Route path="schedule/add" element={<CreateSchedule />} />
             <Route path="schedule/view" element={<ViewSchedules />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="manage_ex" element={<ManageExercises />} />
             <Route path="about" element={<About />} />
 
             {/* Other admin pages go here */}
