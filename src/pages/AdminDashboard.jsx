@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import supabase from "../lib/supabaseClient";
 import StatCard from "../components/StatCard";
+import QuickActions from "../components/QuickActions";
 
 const icons = {
   members: "🏋️",
   payments: "💳",
-  balance: "💰",         
+  balance: "💰",
   checkins: "📅",
   expiries: "⏳",
 };
@@ -122,7 +123,9 @@ export default function AdminDashboard() {
 
   /* ---------- Loading state ---------- */
   if (!stats) {
-    return <div className="text-gray-400 animate-pulse">Loading dashboard…</div>;
+    return (
+      <div className="text-gray-400 animate-pulse">Loading dashboard…</div>
+    );
   }
 
   /* ---------- Render ---------- */
@@ -130,50 +133,63 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <StatCard icon={icons.members}  label="Active Members"   value={stats.members} />
-        <StatCard icon={icons.payments} label="Payments (Month)" value={stats.payments} />
-        <StatCard icon={icons.balance}  label="Running Balance (YTD)" value={stats.runningBalance} />
-        <StatCard icon={icons.checkins} label="Today’s Check‑ins" value={stats.checkins} />
-        <StatCard icon={icons.expiries} label="Expiring Soon"   value={stats.expiries} />
+        <StatCard
+          icon={icons.members}
+          label="Active Members"
+          value={stats.members}
+        />
+        <StatCard
+          icon={icons.payments}
+          label="Payments (Month)"
+          value={stats.payments}
+        />
+        <StatCard
+          icon={icons.balance}
+          label="Running Balance (YTD)"
+          value={stats.runningBalance}
+        />
+        <StatCard
+          icon={icons.checkins}
+          label="Today’s Check‑ins"
+          value={stats.checkins}
+        />
+        <StatCard
+          icon={icons.expiries}
+          label="Expiring Soon"
+          value={stats.expiries}
+        />
       </div>
 
-      {/* Recent activity */}
+      {/* Recent activity with Reset button */}
       <div className="bg-gray-900 rounded-xl p-6 shadow">
-        <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">Recent Activity</h3>
+          <button
+            onClick={() => setRecent([])}
+            className="text-sm bg-yellow-400 text-black font-medium px-3 py-1 rounded hover:bg-yellow-500"
+          >
+            Reset
+          </button>
+        </div>
         <ul className="space-y-2 text-gray-300 text-sm">
-          {recent.map((item) => (
-            <li
-              key={item.id}
-              className="border-b border-gray-800 pb-2 last:border-0"
-            >
-              {item.text}
-            </li>
-          ))}
+          {recent.length === 0 ? (
+            <li className="text-gray-500">No recent activity.</li>
+          ) : (
+            recent.map((item) => (
+              <li
+                key={item.id}
+                className="border-b border-gray-800 pb-2 last:border-0"
+              >
+                {item.text}
+              </li>
+            ))
+          )}
         </ul>
       </div>
 
-      {/* Payment chart placeholder */}
-      <div className="bg-gray-900 rounded-xl p-6 shadow">
-        <h3 className="text-xl font-semibold mb-4">
-          Monthly Income (Last 6 Months)
-        </h3>
-        <div className="h-64 flex items-center justify-center text-gray-500">
-          <span>Chart coming soon…</span>
-        </div>
-      </div>
+      {/* Navigation shortcuts section */}
+      <QuickActions />
 
-      {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <button className="bg-yellow-400 text-black rounded-xl p-6 font-semibold hover:bg-yellow-500 transition">
-          ➕ Add Member
-        </button>
-        <button className="bg-yellow-400 text-black rounded-xl p-6 font-semibold hover:bg-yellow-500 transition">
-          💳 Add Payment
-        </button>
-        <button className="bg-yellow-400 text-black rounded-xl p-6 font-semibold hover:bg-yellow-500 transition">
-          📋 View Attendance
-        </button>
-      </div>
     </div>
   );
 }
