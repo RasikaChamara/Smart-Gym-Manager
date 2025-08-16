@@ -18,10 +18,11 @@ import ViewSchedules from "./pages/ViewSchedules";
 import Notifications from "./pages/notifications";
 import ManageExercises from "./pages/ManageExercises";
 import About from "./pages/About";
+import MemberLayout from "./components/MemberLayout";
+import MemberDashboard from "./pages/member/Dashboard";
 
 function App() {
   return (
-    
     <Router>
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
@@ -33,7 +34,10 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="approve-members" element={<ApproveMembers />} />
             <Route path="view-members" element={<ViewMembers />} />
-            <Route path="/admin/add-member-no-email" element={<AddMemberNoEmail />} />
+            <Route
+              path="/admin/add-member-no-email"
+              element={<AddMemberNoEmail />}
+            />
             <Route path="attendance" element={<Attendance />} />
             <Route path="payments" element={<AddPayment />} />
             <Route path="payments/view" element={<ViewPayments />} />
@@ -44,8 +48,19 @@ function App() {
             <Route path="notifications" element={<Notifications />} />
             <Route path="manage_ex" element={<ManageExercises />} />
             <Route path="about" element={<About />} />
+          </Route>
+        </Route>
 
-            {/* Other admin pages go here */}
+        {/* Member routes */}
+        <Route element={<ProtectedRoute allowedRole="member" />}>
+          <Route path="/member" element={<MemberLayout />}>
+            {/* Default dashboard content as index route */}
+            <Route index element={<MemberDashboard />} />
+
+            {/* Keep dashboard route also if needed */}
+            <Route path="dashboard" element={<MemberDashboard />} />
+
+            {/* Later: add routes for member-specific pages like attendance, schedules, measurements */}
           </Route>
         </Route>
 

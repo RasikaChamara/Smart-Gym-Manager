@@ -11,14 +11,56 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({
+    setErrorMsg("");
+
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+
     if (error) {
       setErrorMsg(error.message);
-    } else {
+      return;
+    }
+
+    const user = data.user;
+
+    // ✅ 1. Get role from role_claims
+    const { data: roleClaim, error: roleError } = await supabase
+      .from("role_claims")
+      .select("role")
+      .eq("user_id", user.id)
+      .single();
+
+    if (roleError || !roleClaim) {
+      setErrorMsg("Unable to fetch user role.");
+      return;
+    }
+
+    // ✅ 2. Redirect logic
+    if (roleClaim.role === "admin") {
+      // Admins don’t have member info
       navigate("/admin/dashboard");
+    } else if (roleClaim.role === "member") {
+      // Fetch member info for members
+      const { data: member, error: memberError } = await supabase
+        .from("members")
+        .select("first_name, last_name")
+        .eq("user_id", user.id)
+        .single();
+
+      if (memberError || !member) {
+        setErrorMsg("Unable to fetch member info.");
+        return;
+      }
+
+      // Store member info locally (for display in topbar, profile, etc.)
+      localStorage.setItem("firstName", member.first_name);
+      localStorage.setItem("lastName", member.last_name);
+
+      navigate("/member/Dashboard");
+    } else {
+      setErrorMsg("Unauthorized role. Contact admin.");
     }
   };
 
