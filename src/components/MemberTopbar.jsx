@@ -27,7 +27,7 @@ export default function MemberTopbar() {
       <div className="flex items-center gap-4">
         <button
           onClick={goToProfile}
-          className="text-yellow-400 font-semibold hover:underline"
+          className="text-white font-semibold hover:underline"
         >
           {firstName}
         </button>
