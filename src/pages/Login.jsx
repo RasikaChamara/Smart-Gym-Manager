@@ -55,6 +55,7 @@ const Login = () => {
       }
 
       // Store member info locally (for display in topbar, profile, etc.)
+      localStorage.setItem("userId", user.id);   
       localStorage.setItem("firstName", member.first_name);
       localStorage.setItem("lastName", member.last_name);
 

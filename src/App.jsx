@@ -20,6 +20,7 @@ import ManageExercises from "./pages/ManageExercises";
 import About from "./pages/About";
 import MemberLayout from "./components/MemberLayout";
 import MemberDashboard from "./pages/member/Dashboard";
+import Profile from "./pages/member/Profile";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
 
             {/* Keep dashboard route also if needed */}
             <Route path="dashboard" element={<MemberDashboard />} />
+            <Route path="profile" element={<Profile />} />
 
             {/* Later: add routes for member-specific pages like attendance, schedules, measurements */}
           </Route>
